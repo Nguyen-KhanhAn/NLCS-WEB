@@ -1,0 +1,103 @@
+﻿@using Demo_Hangfire.Models
+@model TypeProduct
+@{
+    ViewBag.Title = "EditTypeProduct";
+    Layout = "~/Views/Shared/Admin.cshtml";
+}
+
+<h2>EditTypeProduct</h2>
+
+<div id="page-wrapper" style="min-height: 251px;">
+    <div class="main-page">
+        <div class="main-page">
+            <div class="inline-form widget-shadow">
+                <div class="form-title">
+                    <h4>Sửa loại sản phẩm :</h4>
+                </div>
+                <div class="form-body">
+                    <form id="data" data-toggle="validator" novalidate="true">
+                        <div class="form-group has-feedback">
+                            <input name="Name" type="text" class="form-control" id="NameType" value="@Model.Name" data-error="Bruh, that email address is invalid" required="">
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                        </div>
+                        <div class="form-group">
+
+                            <input id="hsp_tentaptin" type="file" name="HinhAnh" />
+                            <input type="hidden" name="ID" id="ID" value="@Model.ID" />
+                            <input type="hidden" id="File" value="@Model.Image" />
+                            <br />
+                            <img style="width: 150px;" id="preview-img" src="@Url.Content("~/Content/images/"+Model.Image)" alt="Alternate Text" />
+
+                        </div>
+                        <div class="bottom">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary ">
+                                    Sửa
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const reader = new FileReader();
+    const fileInput = document.getElementById("hsp_tentaptin");
+    const img = document.getElementById("preview-img");
+    reader.onload = e => {
+        img.src = e.target.result;
+    }
+    fileInput.addEventListener('change', e => {
+        const f = e.target.files[0];
+        reader.readAsDataURL(f);
+    })
+    $('form#data').submit(function (e) {
+        e.preventDefault();
+        const Name = $("#NameType").val();
+        const ID = $("#ID").val();
+        var formData = new FormData(this);
+        const file = formData.get("HinhAnh");
+        console.log(file);
+       
+        $.ajax({
+            type: "POST",
+            url: "https://localhost:44389/Admin/EditTP",
+            data: formData, // serializes the form's elements.
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (dataT) {
+                console.log(dataT) // show response from the php script.
+                if (dataT.mess == "success") {
+                    Swal.fire({
+
+                        icon: 'success',
+                        title: 'Sửa thành công',
+                        text: 'Bạn đã sửa loại sản phẩm thành công',
+                        showConfirmButton: true,
+
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.reload()
+                        }
+                    })
+                }
+                else {
+                    Swal.fire({
+
+                        icon: 'error',
+                        title: 'Xảy ra lỗi',
+                        text: 'Đã xảy ra lỗi, vui lòng thử lại sau!',
+                        showConfirmButton: true,
+
+                    })
+                }
+            }
+        });
+        
+       
+    });
+
+</script>

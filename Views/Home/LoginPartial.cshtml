@@ -1,0 +1,431 @@
+﻿@using Demo_Hangfire.Models
+@model User
+    @{ 
+        User u = Model;
+    }
+<div class="agile-main-top">
+    <div class="container-fluid">
+        <div class="row main-top-w3l py-2">
+            <div class="col-lg-4 header-most-top">
+                <p class="text-white text-lg-left text-center">
+                    Offer Zone Top Deals &amp; Discounts
+                    <i class="fas fa-shopping-cart ml-1"></i>
+                </p>
+            </div>
+            <div class="col-lg-8 header-right mt-lg-0 mt-2">
+                <!-- header lists -->
+                <ul>
+                    <li class="text-center border-right text-white">
+                        <a class="play-icon popup-with-zoom-anim text-white" href="#small-dialog1">
+                            <i class="fas fa-map-marker mr-2"></i>Chọn vị trí
+                        </a>
+                    </li>
+                    <li class="text-center border-right text-white">
+                        <a id="TrackOrder" href="#" class="text-white">
+                            <i class="fas fa-truck mr-2"></i>Đơn hàng
+                        </a>
+                    </li>
+                    <li class="text-center border-right text-white">
+                        <i class="fas fa-phone mr-2"></i> 001 234 5678
+                    </li>
+                    @if (Model == null)
+                    {
+                        <li class="text-center border-right text-white">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" class="text-white">
+                                <i class="fas fa-sign-in-alt mr-2"></i> Đăng nhập
+                            </a>
+                        </li>
+                        <li class="text-center text-white">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2" class="text-white">
+                                <i class="fas fa-sign-out-alt mr-2"></i>Đăng ký
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="text-center border-right text-white">
+                            <a href="@Url.Action("Logout","Home")" class="text-white">
+                                <i class="fas fa-sign-out-alt mr-2"></i> Đăng xuất
+                            </a>
+                        </li>
+                    }
+
+
+                </ul>
+                <!-- //header lists -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center">Log In</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="@Url.Action("Login", "Home")" id="Form-Login"  method="post">
+                    <input type="hidden" name="name" id="CheckUser" value="@u" />
+                    <div class="form-group">
+                        <label class="col-form-label">Email</label>
+                        <input type="text" class="form-control" placeholder=" " name="Email" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Password</label>
+                        <input type="password" class="form-control" placeholder=" " name="Password" required="">
+                    </div>
+                    <div class="right-w3l">
+                        <input type="submit" class="form-control" value="Log in">
+                    </div>
+                    <p class="text-center dont-do mt-3">
+                        Don't have an account?
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                            Register Now
+                        </a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Register</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Register", "Home", FormMethod.Post, new { @id = "form-dangky" }))
+                {
+                    <div class="form-group">
+                        <label class="col-form-label">Your Name</label>
+                        <input type="text" class="form-control" placeholder=" " name="Name" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Email</label>
+                        <input type="email" class="form-control" placeholder=" " name="Email" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Password</label>
+                        <input type="password" class="form-control" placeholder=" " name="Password" id="password1" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Phone</label>
+                        <input type="number" class="form-control" placeholder=" " name="Phone" id="phone" required="">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label">Tỉnh</label>
+                        @Html.DropDownList("Province_id", null, new { @class = "form-select", @name = "Province_id", @id = "IDProvince" })
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label">Quận/Huyện</label>
+                        @Html.DropDownList("District_id", new SelectList(""), "", new { @class = "form-select", @name = "District_id", @id = "IDDistrict" })
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Thị Trấn</label>
+                        @Html.DropDownList("Town_id", new SelectList(""), "", new { @class = "form-select", @name = "Town_id", @id = "IDTown" })
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label">Địa Chỉ</label>
+
+                        <textarea class="form-control" rows="5" id="comment" name="Address"></textarea>
+                    </div>
+
+                    <div class="right-w3l">
+                        <input type="submit" class="form-control" value="Register">
+                    </div>
+                    <div class="sub-w3l">
+                        <div class="custom-control custom-checkbox mr-sm-2">
+                            <input type="checkbox" class="custom-control-input" id="customControlAutosizing2">
+                            <label class="custom-control-label" for="customControlAutosizing2">I Accept to the Terms &amp; Conditions</label>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div id="myModal" class="modalCustom">
+
+    <!-- Modal content -->
+   
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center">Confirm</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" id="captcha-close" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="@Url.Action("Confirm", "Home")" id="Form-Confirm" method="post">
+                        <input type="hidden" name="name" id="check" value="@ViewBag.check" />
+                        <div class="form-group">
+                            <label class="col-form-label">Captcha</label>
+                            <input type="number" class="form-control" placeholder=" " name="Captcha" required="">
+                        </div>
+                        <div class="right-w3l">
+                            <input type="submit" class="form-control" value="Send">
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+      
+    </div>
+
+</div>
+<style>
+
+    /* The Modal (background) */
+    .modalCustom {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+</style>
+
+<script>
+    $(document).ready(function () {
+        let check = $("#check").val();
+       /* let check = 'baob1910000@gmail.com';*/
+        console.log('check', check)
+        if (check != "") {
+            $("#myModal").css("display", "block")
+        }
+
+        $("#captcha-close").click(function () {
+            $("#myModal").css("display", "none")
+        })
+        $("#IDProvince").change(function () {
+            var Province_id = $(this).val();
+            console.log(Province_id)
+            $.ajax({
+                type: "GET",
+
+                url: "https://localhost:44389/Home/GetDistricts?Province_id=" + Province_id,
+                contentType: "html",
+                success: function (response) {
+                    debugger
+                    //$('#idHuyen').children().remove().end()
+                    $("#IDDistrict").empty();
+                    $("#IDDistrict").append(response);
+                }
+            })
+
+        })
+
+        $("#IDDistrict").change(function () {
+            var District_id = $(this).val();
+            $.ajax({
+                type: "GET",
+
+                url: "https://localhost:44389/Home/GetTowns?District_id=" + District_id,
+                contentType: "html",
+                success: function (response) {
+                    debugger
+                    $("#IDTown").empty();
+                    $("#IDTown").append(response);
+                }
+            })
+
+        })
+
+     
+        $("#Form-Confirm").submit(function (event) {
+            event.preventDefault();
+            var form = $(this);
+            var actionUrl = form.attr('action');
+
+            $.ajax({
+                type: "POST",
+                url: actionUrl,
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    console.log(data)
+                    if (data.mess == "success") {
+                        Swal.fire({
+
+                            icon: 'success',
+                            title: 'Đăng ký tài khoản thành công',
+                            showConfirmButton: true,
+
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.reload;
+                            }
+                        })
+                    }
+                    else {
+                        Swal.fire({
+
+                            icon: 'error',
+                            title: 'Xảy ra lỗi',
+                            text: 'Đã xảy ra lỗi, vui lòng thử lại sau!',
+                            showConfirmButton: true,
+
+                        })
+                    }
+                }
+            });
+
+
+            
+
+
+        });
+
+        $(".addCart").click(function () {
+            let user = $("#CheckUser").val();
+            console.log(user)
+            var ID = $(this).attr("data-ID");
+            if (user != '') {
+                $.ajax({
+                    type: "GET",
+                    url: "https://localhost:44389/Product/ThemGioHang?MaSP=" + ID,
+                    success: function (data) {
+                        console.log(data.mess)
+                        if (data.mess == "success") {
+                            Swal.fire({
+
+                                icon: 'success',
+                                title: 'Thêm vào giỏ hàng thành công',
+                                showConfirmButton: true,
+
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.reload;
+                                }
+                            })
+                        }
+                        else {
+                            Swal.fire({
+
+                                icon: 'error',
+                                title: 'Xảy ra lỗi',
+                                text: 'Đã xảy ra lỗi, vui lòng thử lại sau!',
+                                showConfirmButton: true,
+
+                            })
+                        }
+                    }
+                });
+            }
+            else {
+                Swal.fire({
+
+                    icon: 'error',
+                    title: 'Xảy ra lỗi',
+                    text: 'Vui lòng đăng nhập!',
+                    showConfirmButton: true,
+
+                })
+            }
+           
+        })
+    });
+    $("#TrackOrder").click(function () {
+        let user = $("#CheckUser").val();
+        console.log(user)
+        var ID = $(this).attr("data-ID");
+        if (user != '') {
+            window.location.href = "https://localhost:44389/Home/TrackOrder";
+          
+        }
+        else {
+            Swal.fire({
+
+                icon: 'error',
+                title: 'Xảy ra lỗi',
+                text: 'Vui lòng đăng nhập!',
+                showConfirmButton: true,
+
+            })
+        }
+
+    })
+    $("#Form-Login").submit(function (event) {
+        event.preventDefault();
+        var form = $(this);
+        var actionUrl = form.attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: actionUrl,
+            data: form.serialize(), // serializes the form's elements.
+            success: function (data) {
+                console.log(data)
+                if (data.mess == "success" && data.TypeUser_id == 1) {
+                    window.location.href = "https://localhost:44389/";
+                }
+                else if (data.mess == "success" && data.TypeUser_id == 2) {
+                    window.location.href = "https://localhost:44389/Admin";
+                }
+                else {
+                    Swal.fire({
+
+                        icon: 'error',
+                        title: 'Xảy ra lỗi',
+                        text: 'Đã xảy ra lỗi, vui lòng thử lại sau!',
+                        showConfirmButton: true,
+
+                    })
+                }
+            }
+        });
+
+
+
+
+
+    });
+
+</script>
+

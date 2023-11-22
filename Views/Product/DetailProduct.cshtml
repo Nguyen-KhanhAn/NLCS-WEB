@@ -1,0 +1,121 @@
+﻿@using Demo_Hangfire.Models
+@model Product
+@{
+    ViewBag.Title = "DetailProduct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="banner-bootom-w3-agileits py-5">
+    <div class="container py-xl-4 py-lg-2">
+        <!-- tittle heading -->
+        <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+            <span>C</span>hi
+            <span>T</span>iết
+            <span>S</span>ản
+            <span>P</span>hầm
+        </h3>
+        <!-- //tittle heading -->
+        <div class="row">
+            <div class="col-lg-5 col-md-8 single-right-left ">
+                <div class="grid images_3_of_2">
+                    <div class="flexslider">
+
+                        <div class="clearfix"></div>
+                        <div class="flex-viewport" style="overflow: hidden; position: relative;">
+                            <ul class="slides" style="width: 1000%; transition-duration: 0s; transform: translate3d(-1311px, 0px, 0px);">
+                                <li data-thumb="@Url.Content("~/Content/images/"+Model.Image1)" class="clone" aria-hidden="true" style="width: 437px; margin-right: 0px; float: left; display: block;">
+                                    <div class="thumb-image">
+                                        <img src="@Url.Content("~/Content/images/"+Model.Image1)" data-imagezoom="true" class="img-fluid" alt="" draggable="false">
+                                    </div>
+                                </li>
+                                <li data-thumb="@Url.Content("~/Content/images/"+Model.Image1)" style="width: 437px; margin-right: 0px; float: left; display: block;" class="" data-thumb-alt="">
+                                    <div class="thumb-image">
+                                        <img src="@Url.Content("~/Content/images/"+Model.Image1)" data-imagezoom="true" class="img-fluid" alt="" draggable="false">
+                                    </div>
+                                </li>
+                                <li data-thumb="@Url.Content("~/Content/images/"+Model.Image1)" data-thumb-alt="" style="width: 437px; margin-right: 0px; float: left; display: block;" class="">
+                                    <div class="thumb-image">
+                                        <img src="@Url.Content("~/Content/images/"+Model.Image1)" data-imagezoom="true" class="img-fluid" alt="" draggable="false">
+                                    </div>
+                                </li>
+                                <li data-thumb="@Url.Content("~/Content/images/"+Model.Image1)" data-thumb-alt="" style="width: 437px; margin-right: 0px; float: left; display: block;" class="flex-active-slide">
+                                    <div class="thumb-image">
+                                        <img src="@Url.Content("~/Content/images/"+Model.Image1)" data-imagezoom="true" class="img-fluid" alt="" draggable="false">
+                                    </div>
+                                </li>
+                                <li data-thumb="@Url.Content("~/Content/images/"+Model.Image1)" style="width: 437px; margin-right: 0px; float: left; display: block;" class="clone" aria-hidden="true">
+                                    <div class="thumb-image">
+                                        <img src="@Url.Content("~/Content/images/"+Model.Image1)" data-imagezoom="true" class="img-fluid" alt="" draggable="false">
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        @*<ol class="flex-control-nav flex-control-thumbs">
+                        <li>
+                            <img src="~/Content/images/si1.jpg" class="" draggable="false">
+                            </li>
+                        <li>
+                            <img src="~/Content/images/si2.jpg" draggable="false" class=""></li>
+                        <li><img src="~/Content/images/si3.jpg" draggable="false" class="flex-active"></li>
+                            </ol>*@
+                        @*<ul class="flex-direction-nav">
+                            <li class="flex-nav-prev">
+                            <a class="flex-prev" href="#">Previous</a></li>
+                        <li class="flex-nav-next"><a class="flex-next" href="#">Next</a></li>
+                        </ul>*@
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7 single-right-left simpleCart_shelfItem">
+                <h3 class="mb-3">@Model.Name</h3>
+                <p class="mb-3">
+                    <span class="item_price"> @Model.Price.Value.ToString("#,##0")</span>
+                    <del class="mx-2 font-weight-light">@Model.Price_discount.Value.ToString("#,##0")</del>
+                    <label>Giao hàng miễn phí</label>
+                </p>
+                <div class="single-infoagile">
+                    <ul>
+                        <li class="mb-3">
+
+                            Tiền mặt khi giao hàng đủ điều kiện.
+                        </li>
+                        <li class="mb-3">
+                            Tốc độ vận chuyển đến giao hàng.
+                        </li>
+                        <li class="mb-3">
+                            Trả góp từ 655k/tháng.
+                        </li>
+                        <li class="mb-3">
+                            Ưu đãi ngân hàngGiảm thêm 5%* với Thẻ tín dụng Buzz Bank BuzzT&amp;C
+                        </li>
+                    </ul>
+                </div>
+                <div class="product-single-w3l">
+                    <p class="my-3">
+                        <i class="far fa-hand-point-right mr-2"></i>
+                        <label>1 năm</label>
+                        Bảo hành của nhà sản xuất
+                    </p>
+                    <ul>
+                        <li class="mb-1">
+                           @Model.Description
+                        </li>
+                        
+                    </ul>
+                    <p class="my-sm-4 my-3">
+                        <i class="fas fa-retweet mr-3"></i>Net banking &amp; Credit/ Debit/ ATM card
+                    </p>
+                </div>
+                <div class="occasion-cart">
+                    <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                        <input data-ID="@Model.ID" type="submit" name="submit" value="Thêm vào giỏ" class="button btn addCart">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

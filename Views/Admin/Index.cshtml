@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Admin.cshtml";
+}
+
+<div id="page-wrapper" style="min-height: 251px;">
+    <div class="main-page">
+
+       
+        <div>
+            <canvas id="myChart"></canvas>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <!-- for amcharts js -->
+        <!--<script src="~/Content/Admin/js/amcharts.js"></script>
+    <script src="~/Content/Admin/js/serial.js"></script>
+    <script src="~/Content/Admin/js/export.min.js"></script>
+    <link rel="stylesheet" href="~/Content/Admin/css/export.css" type="text/css" media="all">
+    <script src="~/Content/Admin/js/light.js"></script>-->
+        <!-- for amcharts js -->
+        <!--<script src="~/Content/Admin/js/index1.js"></script>-->
+
+
+
+    </div>
+</div>
+<script>
+  window.onload = function () {
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	theme: "light2", // "light1", "dark1", "dark2"
+	exportEnabled: true,
+	title: {
+		text: "Doanh thu theo tháng"
+	},
+	data: [{
+		type: "column",
+		dataPoints: @Html.Raw(ViewBag.DataPoints)
+	}]
+});
+chart.render();
+
+}
+</script>
+<script>
+    const ctx = document.getElementById('myChart');
+    const dataRender = @Html.Raw(ViewBag.DataPoints);
+    const labels = dataRender.map((x) => x.label);
+    console.log('labels', labels);
+    const data = dataRender.map((x) => x.y);
+    console.log('data', data);
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: '# of month',
+                data: data,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

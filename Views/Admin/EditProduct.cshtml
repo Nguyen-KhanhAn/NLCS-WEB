@@ -1,0 +1,187 @@
+﻿@using Demo_Hangfire.Models
+@model Product
+@{
+    ViewBag.Title = "EditProduct";
+    Layout = "~/Views/Shared/Admin.cshtml";
+    List<Demo_Hangfire.Models.TypeProduct> type = ViewBag.TypeProduct_id as List<Demo_Hangfire.Models.TypeProduct>;
+}
+
+<h2>EditProduct</h2>
+
+<div id="page-wrapper" style="min-height: 251px;">
+    <div class="main-page">
+        <div class="inline-form widget-shadow">
+            <div class="form-title">
+                <h4>Sửa sản phẩm :</h4>
+            </div>
+            <div class="form-body">
+                <form id="data" data-toggle="validator" >
+                    <div class="form-group ">
+                        <label for="txtarea1" class=" control-label">Tên</label><br />
+                        <input name="Name" type="text" class="form-control" id="Name" value="@Model.Name" data-error="Bruh, that email address is invalid" required="">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputFile">Hình Ảnh</label>
+                        <input id="hsp_tentaptin" type="file" name="HinhAnh" value="" />
+                        @*<input type="hidden" name="name" id="url" value="" />*@
+                        <img style="width: 150px;" id="preview-img" src="@Url.Content("~/Content/images/"+Model.Image1)" alt="Alternate Text" />
+                        <input type="hidden"  id="File" value="@Model.Image1" />
+                        <p class="help-block">Example block-level help text here.</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputFile1">Hình Ảnh 1</label><br />
+                        <img style="width: 150px;" id="preview-img1" src="@Url.Content("~/Content/images/"+Model.Image2)" alt="Alternate Text" />
+
+                        <input id="hsp_tentaptin1" type="file" name="HinhAnh1" value="" />
+                        <input type="hidden"  id="File1" value="@Model.Image2" />
+                        <p class="help-block">Example block-level help text here.</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputFile2">Hình Ảnh 2</label><br />
+                        <img style="width: 150px;" id="preview-img2" src="@Url.Content("~/Content/images/"+Model.Image3)" alt="Alternate Text" />
+
+                        <input id="hsp_tentaptin2" type="file" name="HinhAnh2" value="" />
+                        <input type="hidden"  id="File2" value="@Model.Image3" />
+                        <p class="help-block">Example block-level help text here.</p>
+                    </div>
+
+
+                    <div class="form-group has-feedback">
+                        <label for="txtarea1" class=" control-label">Giá tiền</label><br />
+                        <input name="Price" type="number" class="form-control" id="Price" value="@Model.Price" data-error="Bruh, that email address is invalid" required="">
+
+                    </div>
+                    <div class="form-group has-feedback">
+                        <label for="txtarea1" class=" control-label">Giảm giá</label><br />
+                        <input name="Price_discount" type="number" class="form-control" id="Price_discount" value="@Model.Price_discount"  data-error="Bruh, that email address is invalid" required="">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="selector1" control-label">Loại sản phẩm</label><br />
+                        @Html.DropDownList("TypeProduct_id", null, new { @class = "form-control1", @name = "TypeProduct_id", @id = "selector1" })
+                    </div>
+                    <div class="form-group">
+                        <label for="selector1" control-label">Đã bán</label><br />
+                        <input type="hidden" name="ID" id="ID" value="@Model.ID" />
+                        <input name="Sale" type="number" class="form-control" id="Sale" value="@Model.Sales" data-error="Bruh, that email address is invalid" required="">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="selector1" control-label">Số lượng</label><br />
+
+                        <input name="Quantity" type="number" class="form-control" id="Quantity" value="@Model.Remaining" data-error="Bruh, that email address is invalid" required="">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="txtarea1" class=" control-label">Mô tả</label><br />
+                        <textarea class="form-control" rows="5" id="Description" name="Description">@Model.Description</textarea>
+                    </div>
+                    <div class="bottom">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary ">Sửa</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Hiển thị ảnh preview (xem trước) khi người dùng chọn Ảnh
+
+    //hình 1
+    const reader = new FileReader();
+    const fileInput = document.getElementById("hsp_tentaptin");
+    const img = document.getElementById("preview-img");
+    reader.onload = e => {
+        img.src = e.target.result;
+    }
+    fileInput.addEventListener('change', e => {
+        const f = e.target.files[0];
+        reader.readAsDataURL(f);
+    })
+
+
+    //hình 2
+    const reader1 = new FileReader();
+    const fileInput1 = document.getElementById("hsp_tentaptin1");
+    const img1 = document.getElementById("preview-img1");
+    reader1.onload = e => {
+        img1.src = e.target.result;
+    }
+    fileInput1.addEventListener('change', e => {
+        const f1 = e.target.files[0];
+        reader1.readAsDataURL(f1);
+    })
+
+    //hình 3
+    const reader2 = new FileReader();
+    const fileInput2 = document.getElementById("hsp_tentaptin2");
+    const img2 = document.getElementById("preview-img2");
+    reader2.onload = e => {
+        img2.src = e.target.result;
+    }
+    fileInput2.addEventListener('change', e => {
+        const f2 = e.target.files[0];
+        reader2.readAsDataURL(f2);
+    })
+    $('form#data').submit(function (e) {
+        e.preventDefault();
+        const ID = $("#ID").val();
+        var formData = new FormData(this);
+        const Name = $("#Name").val();
+        const Price = $("#Price").val();
+        const Price_discount = $("#Price_discount").val();
+        const Sale = $("#Sale").val();
+        const Quantity = $("#Quantity").val();
+        const Description = $("#Description").val();
+        const file = formData.get("HinhAnh");
+        const file1 = formData.get("HinhAnh1");
+        const file2 = formData.get("HinhAnh2");
+        console.log(file);
+        console.log(file1);
+        console.log(file2);
+
+
+
+        $.ajax({
+            type: "POST",
+            url: "https://localhost:44389/Admin/EditP",
+            data: formData, // serializes the form's elements.
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (dataT) {
+                console.log(dataT) // show response from the php script.
+                if (dataT.mess == "success") {
+                    Swal.fire({
+
+                        icon: 'success',
+                        title: 'Sửa thành công',
+                        text: 'Bạn đã sửa  sản phẩm thành công',
+                        showConfirmButton: true,
+
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.reload()
+                        }
+                    })
+                }
+                else {
+                    Swal.fire({
+
+                        icon: 'error',
+                        title: 'Xảy ra lỗi',
+                        text: 'Đã xảy ra lỗi, vui lòng thử lại sau!',
+                        showConfirmButton: true,
+
+                    })
+                }
+            }
+        });
+
+    });
+   
+
+</script>

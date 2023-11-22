@@ -1,0 +1,12 @@
+﻿
+
+<option value="">--- Chọn Xã ---</option>
+@{
+    if (ViewBag.Town_id != null)
+    {
+        foreach (var item in ViewBag.Town_id)
+        {
+            <option value="@item.Value">@item.Text</option>
+        }
+    }
+}

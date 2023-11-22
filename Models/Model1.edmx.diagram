@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0180cffd26c94840bf87e8f1dc09a017" Name="Diagram1">
+        <EntityTypeShape EntityType="AnNguyenModel.Address" Width="1.5" PointX="7.5" PointY="5.75" />
+        <EntityTypeShape EntityType="AnNguyenModel.Bill" Width="1.5" PointX="12.75" PointY="5.75" />
+        <EntityTypeShape EntityType="AnNguyenModel.BillDetail" Width="1.5" PointX="15" PointY="6.125" />
+        <EntityTypeShape EntityType="AnNguyenModel.DeliveryStatu" Width="1.5" PointX="10.5" PointY="2.5" />
+        <EntityTypeShape EntityType="AnNguyenModel.District" Width="1.5" PointX="3" PointY="7.75" />
+        <EntityTypeShape EntityType="AnNguyenModel.Product" Width="1.5" PointX="12.75" PointY="10.375" />
+        <EntityTypeShape EntityType="AnNguyenModel.Province" Width="1.5" PointX="0.75" PointY="4.25" />
+        <EntityTypeShape EntityType="AnNguyenModel.Town" Width="1.5" PointX="5.25" PointY="7.875" />
+        <EntityTypeShape EntityType="AnNguyenModel.TypeProduct" Width="1.5" PointX="10.5" PointY="11.125" />
+        <EntityTypeShape EntityType="AnNguyenModel.TypeUser" Width="1.5" PointX="8.25" PointY="2.5" />
+        <EntityTypeShape EntityType="AnNguyenModel.User" Width="1.5" PointX="10.5" PointY="5" />
+        <AssociationConnector Association="AnNguyenModel.FK__Address__Distric__6383C8BA" />
+        <AssociationConnector Association="AnNguyenModel.FK__Address__Provinc__6477ECF3" />
+        <AssociationConnector Association="AnNguyenModel.FK__Address__Town_id__656C112C" />
+        <AssociationConnector Association="AnNguyenModel.FK__Address__User_id__66603565" />
+        <AssociationConnector Association="AnNguyenModel.FK__Bill__DeliverySt__68487DD7" />
+        <AssociationConnector Association="AnNguyenModel.FK__Bill__User_id__14270015" />
+        <AssociationConnector Association="AnNguyenModel.FK__BillDetai__Bill___01142BA1" />
+        <AssociationConnector Association="AnNguyenModel.FK__BillDetai__Produ__6E01572D" />
+        <AssociationConnector Association="AnNguyenModel.FK__District__Provin__619B8048" />
+        <AssociationConnector Association="AnNguyenModel.FK__Town__District_i__628FA481" />
+        <AssociationConnector Association="AnNguyenModel.FK__Users__District___5DCAEF64" />
+        <AssociationConnector Association="AnNguyenModel.FK__Product__TypePro__6754599E" />
+        <AssociationConnector Association="AnNguyenModel.FK__Users__Province___5CD6CB2B" />
+        <AssociationConnector Association="AnNguyenModel.FK__Users__Town_id__5EBF139D" />
+        <AssociationConnector Association="AnNguyenModel.FK__Users__TypeUser___60A75C0F" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

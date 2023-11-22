@@ -1,0 +1,15 @@
+﻿@using Demo_Hangfire.Models
+@model List<TypeProduct>
+<div class="agileits-navi_search">
+    <form action="#" method="post">
+        <select id="agileinfo-nav_search" name="agileinfo_search" class="border" required="">
+            <option value="">Tất cả loại sản phẩm</option>
+            @foreach (var item in Model)
+            {
+                <option value="@item.ID">@item.Name</option>
+            }
+
+           
+        </select>
+    </form>
+</div>

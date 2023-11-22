@@ -1,0 +1,153 @@
+﻿@using Demo_Hangfire.Models
+@model List<Bill>
+@{
+    ViewBag.Title = "TrackOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    int soSP = 1;
+    int tongSoSP = Model.Count();
+    int soSPHienThi = 6;
+    int soTrang = (tongSoSP / soSPHienThi);
+    int soTrangHienThi = tongSoSP % soSPHienThi == 0 ? tongSoSP / soSPHienThi : (tongSoSP / soSPHienThi) + 1;
+    int Trang = 1;
+}
+<section class="h-100 gradient-custom">
+    <div class="container py-5">
+        <form action="@Url.Action("ViewBill","Admin")" method="get">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="date">Ngày BD</label>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group date" id="datepicker">
+                                <input name="start" type="date" class="form-control" id="date_start" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="date">Ngày KT</label>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group date" id="datepicker">
+                                <input name="end" type="date" class="form-control" id="date_end" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="date">Trạng thái</label>
+                        </div>
+                        <div class="col-md-8">
+                            @Html.DropDownList("Delivery", null, new { @class = "form-control1", @name = "Delivery_id", @id = "selector1" })
+                          
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" id="search" class="bg-primary pv20 text-white fw600 text-center">Tìm</button>
+
+                </div>
+            </div>
+        </form>
+        <br />
+        <div class="table-responsive bs-example widget-shadow">
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+
+                        <th>Mã</th>
+                        <th>Ngày tạo</th>
+                        <th>Tổng tiền</th>
+                        <th>Địa chỉ</th>
+                        <th>SDT</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        if (soSP % soSPHienThi == 0)
+                        {
+                            Trang++;
+                        }
+                        <tr class=" @Url.Content("item_sp Trang_"+Trang)">
+
+                            <td>@item.IDDelivery</td>
+                            <td>@item.Created_at</td>
+                            <td> @item.TotalBill.Value.ToString("#,##0")</td>
+                            <td>@item.User.Address, @item.User.Town.Name, @item.User.District.Name, @item.User.Province.Name</td>
+                            <td>@item.User.Phone</td>
+                            <td>@item.DeliveryStatu.Name</td>
+                            @if (item.DeliveryStatus_id == 2)
+                            {
+                                <td>
+                                    <a href="@Url.Action("RecivedBill", "Home", new {@ID = item.ID})" type="button" class="btn btn-success"> Đã nhận
+                                    </a>
+                                    @*<a href="@Url.Action("EditProduct", "Admin", new {@ID = item.ID})" data-id="@item.ID" class="bg-alert pv20 text-white fw600 text-center isEdit">Accept</a>*@
+
+                                </td>
+                            }
+
+                        </tr>
+                        soSP++;
+                    }
+
+                </tbody>
+            </table>
+            <ul class="pagination justify-content-end">
+
+                @for (int i = 1; i <= soTrangHienThi; i++)
+                {
+                    <li data-Trang="@i" class=" @Url.Content("page-item Trang_"+i)"><a class="page-link" href="javascript:void(0);">@i</a></li>
+
+                }
+
+
+            </ul>
+        </div>
+    </div>
+</section>
+<style>
+    .item_sp {
+        display: none;
+    }
+</style>
+<script>
+    $('.Trang_1').show();
+            $('.page-item').click(function () {
+                $('.item_sp').hide();
+                var Trang = $(this).attr("data-Trang");
+                $('.Trang_'+@Url.Content("Trang")).show();
+            })
+    $("#selector1").change(function () {
+        var ID = $(this).val();
+        console.log(ID)
+        $("#search").click(function () {
+            var start = $("#date_start").val();
+            var end = $("#date_end").val();
+            console.log(start)
+            console.log(end)
+            $.ajax({
+                type: "GET",
+                url: "https://localhost:44389/Admin/SearchBill?start=" + start + "&end=" + end + "&status_id=" + ID,
+                success: function (data) {
+                    console.log(data)
+                }
+            });
+
+        })
+    })
+
+</script>

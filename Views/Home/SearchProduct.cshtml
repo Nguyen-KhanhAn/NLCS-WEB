@@ -1,0 +1,56 @@
+﻿@using Demo_Hangfire.Models
+@model List<Product>
+@{
+    ViewBag.Title = "SearchProduct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="h-100 gradient-custom">
+    <div class="container py-5">
+        <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+            <span>T</span>ìm
+            <span>K</span>iếm
+            <span>S</span>ản
+            <span>P</span>hầm
+        </h3>
+    </div>
+
+    <div class="product-sec1 px-sm-4 px-3 py-sm-5  py-3 mt-4">
+        <h3 class="heading-tittle text-center font-italic">Đồng Hồ Trẻ Em</h3>
+        <div class="row">
+            @foreach (var Babi in Model)
+            {
+                <div class="col-md-4 product-men mt-5">
+                    <div class="men-pro-item simpleCart_shelfItem">
+                        <div class="men-thumb-item text-center">
+                            <img class="img-index" src="@Url.Content("~/Content/images/"+Babi.Image1)" alt="">
+                            <div class="men-cart-pro">
+                                <div class="inner-men-cart-pro">
+                                    <a href="@Url.Action("DetailProduct","Product", new { @id = Babi.ID })" class="link-product-add-cart">Quick View</a>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="product-new-top">New</span>
+                        <div class="item-info-product text-center border-top mt-4">
+                            <h4 class="pt-1">
+                                <a href="@Url.Action("DetailProduct","Product", new { @id = Babi.ID })">@Babi.Name</a>
+                            </h4>
+                            <div class="info-product-price my-2">
+                                <span class="item_price"> @Babi.Price.Value.ToString("#,##0")</span>
+                                <del> @Babi.Price_discount.Value.ToString("#,##0")</del>
+                            </div>
+                            <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                                <input data-ID="@Babi.ID" type="submit" name="submit" value="Thêm vào giỏ" class="button btn addCart">
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+        </div>
+    </div>
+</section>
+

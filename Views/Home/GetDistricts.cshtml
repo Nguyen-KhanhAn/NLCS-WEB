@@ -1,0 +1,12 @@
+﻿﻿@model Demo_Hangfire.Models.District
+
+<option value="">--- Chọn Huyện ---</option>
+@{
+    if (@ViewBag.District_id != null)
+    {
+        foreach (var item in @ViewBag.District_id)
+        {
+            <option value="@item.Value">@item.Text</option>
+        }
+    }
+}
